@@ -1,0 +1,20 @@
+#!/bin/bash
+# 让 Codex 等外部 agent 复用 WorkBuddy 里已授权的企业微信命令行工具
+# 用法：./wecom.sh disk files list --json '{"limit":5}'
+# 说明：不需要 npm 安装，也不需要重新扫码；配置目录由 WorkBuddy 生成。
+
+set -euo pipefail
+
+WECOM_BIN="/PATH/TO/wecom-cli"
+NODE_BIN_DIR="/PATH/TO/node-bin"
+WECOM_CFG="/PATH/TO/wecom-cli-config"
+
+if [ ! -d "$WECOM_CFG" ]; then
+  echo "配置目录不存在，可能账号或插件已变更：$WECOM_CFG" >&2
+  exit 1
+fi
+
+export PATH="$NODE_BIN_DIR:$PATH"
+export WECOM_CLI_CONFIG_DIR="$WECOM_CFG"
+
+exec "$WECOM_BIN" "$@"

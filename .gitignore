@@ -1,0 +1,7 @@
+# Filled on each machine from wecom.sh.template. Do not commit.
+wecom.sh
+
+# Tokens, local config, and private document ids
+.env
+.env.*
+*.local
